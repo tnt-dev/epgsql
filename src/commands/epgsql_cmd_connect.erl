@@ -93,7 +93,7 @@ execute(PgSock, #connect{opts = Opts, stage = connect} = State) ->
                       end,
             {ok, PgSock3, State#connect{stage = maybe_auth}};
         {error, Reason} = Error ->
-            {stop, Reason, Error, PgSock}
+            {stop, normal, Error, PgSock}
     end;
 execute(PgSock, #connect{stage = auth, auth_send = {PacketId, Data}} = St) ->
     epgsql_sock:send(PgSock, PacketId, Data),
